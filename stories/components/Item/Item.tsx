@@ -136,7 +136,12 @@ export const Item = React.memo(
             tabIndex={!handle ? 0 : undefined}
           >
             {value}
-            <span className={styles.Actions}>
+            <span
+              onMouseUp={() => {
+                !dragging && !dragOverlay && console.log("%cMenu click!" + Date.now(),"color: blue; font-size: 20px");
+              }}
+              className={styles.Actions}
+            >
               {onRemove ? (
                 <Remove className={styles.Remove} onClick={onRemove} />
               ) : null}

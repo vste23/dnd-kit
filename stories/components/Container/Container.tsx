@@ -9,6 +9,7 @@ export interface Props {
   children: React.ReactNode;
   columns?: number;
   label?: string;
+  active?: any;
   style?: React.CSSProperties;
   horizontal?: boolean;
   hover?: boolean;
@@ -32,6 +33,7 @@ export const Container = forwardRef<HTMLDivElement, Props>(
       onClick,
       onRemove,
       label,
+      active,
       placeholder,
       style,
       scrollable,
@@ -68,7 +70,15 @@ export const Container = forwardRef<HTMLDivElement, Props>(
         {label ? (
           <div className={styles.Header}>
             {label}
-            <div className={styles.Actions}>
+            <div
+              className={styles.Actions}
+              onMouseUp={() => {
+                  active === null && console.log(
+                    '%cParent menu click!' + Date.now(),
+                    'color: red; font-size: 20px'
+                  );
+              }}
+            >
               {onRemove ? <Remove onClick={onRemove} /> : undefined}
               <Handle {...handleProps} />
             </div>

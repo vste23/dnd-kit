@@ -77,7 +77,6 @@ function DroppableContainer({
     ? (id === over.id && active?.data.current?.type !== 'container') ||
       items.includes(over.id)
     : false;
-
   return (
     <Container
       ref={disabled ? undefined : setNodeRef}
@@ -88,6 +87,7 @@ function DroppableContainer({
         opacity: isDragging ? 0.5 : undefined,
       }}
       hover={isOverContainer}
+      active={active}
       handleProps={{
         ...attributes,
         ...listeners,
@@ -143,7 +143,7 @@ export function MultipleContainers({
   itemCount = 3,
   cancelDrop,
   columns,
-  handle = false,
+  handle = true,
   items: initialItems,
   containerStyle,
   getItemStyles = () => ({}),
@@ -233,7 +233,19 @@ export function MultipleContainers({
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        delay: 50,
+        tolerance: 5,
+      }
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 50,
+        tolerance: 5,
+      }
+    }),
   );
   const findContainer = (id: string) => {
     if (id in items) {
@@ -438,7 +450,7 @@ export function MultipleContainers({
             <DroppableContainer
               key={containerId}
               id={containerId}
-              label={minimal ? undefined : `Column ${containerId}`}
+              label={minimal ? undefined : `AAA Column ${containerId}`}
               columns={columns}
               items={items[containerId]}
               scrollable={scrollable}
